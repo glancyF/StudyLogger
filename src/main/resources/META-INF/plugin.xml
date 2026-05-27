@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>valentyn.deshel.studylogger</id>
+    <name>Study Integrity Logger</name>
+    <vendor email="valentindesel@gmail.com">Valentyn</vendor>
+
+    <description><![CDATA[
+        Local study integrity logger. Records IDE file activity metadata into .study-log/file-events.log.
+        The plugin does not store source code and does not send data anywhere.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <projectListeners>
+        <listener
+                class="valentyn.deshel.studylogger.StudyFileEditorListener"
+                topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </projectListeners>
+
+    <applicationListeners>
+        <listener
+                class="valentyn.deshel.studylogger.StudyFileSaveListener"
+                topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
+    </applicationListeners>
+</idea-plugin>
