@@ -14,6 +14,9 @@
         <listener
                 class="deshel.valentyn.studylogger.listener.StudyFileEditorListener"
                 topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+        <listener
+                class="deshel.valentyn.studylogger.listener.StudyProjectActivityListener"
+                topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </projectListeners>
 
     <applicationListeners>

@@ -2,6 +2,7 @@ package deshel.valentyn.studylogger.writer
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import org.jetbrains.jsonProtocol.EventType
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -89,6 +90,34 @@ object StudyLogWriter {
             hashBytes.joinToString("") { "%02x".format(it) }
         } catch (_: Exception) {
             "UNAVAILABLE"
+        }
+    }
+
+    fun logProjectEvent(project: Project, eventType: String) {
+        try {
+            val projectBasePath = project.basePath ?: return
+
+            val projectRoot = Path.of(projectBasePath)
+            val logDirectory = projectRoot.resolve(".study-log")
+            val logFile = logDirectory.resolve("file-events.log")
+
+            Files.createDirectories(logDirectory)
+
+            val timestamp = OffsetDateTime.now().format(formatter)
+            val projectName = project.name
+            val previousEventHash = getPreviousEventHash(logFile)
+            val eventData = "$timestamp | $eventType | project=$projectName | prev_hash=$previousEventHash"
+            val eventHash = calculateTextSha256(eventData)
+            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
+
+            Files.writeString(
+                logFile,
+                line,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            )
+        } catch (_: Exception) {
+            // log
         }
     }
 }
