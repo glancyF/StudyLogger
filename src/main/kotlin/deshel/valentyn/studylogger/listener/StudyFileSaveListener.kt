@@ -6,7 +6,8 @@ import com.intellij.openapi.fileEditor.FileDocumentManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.StudyLogWriter
+import deshel.valentyn.studylogger.writer.StudyEvidenceReportWriter
+import deshel.valentyn.studylogger.writer.StudyLogWriter
 import deshel.valentyn.studylogger.StudyPathFilter
 
 class StudyFileSaveListener: FileDocumentManagerListener {
@@ -18,6 +19,7 @@ class StudyFileSaveListener: FileDocumentManagerListener {
             return
         }
         StudyLogWriter.logFileEvent(project, "FILE_SAVED", file)
+//        StudyEvidenceReportWriter.writeVerificationReport(project); //TODO temp
     }
 
     private fun findProjectForFile(file: VirtualFile): Project? {

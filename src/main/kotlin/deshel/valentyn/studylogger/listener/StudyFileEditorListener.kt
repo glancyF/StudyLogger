@@ -4,7 +4,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.StudyLogWriter
+import deshel.valentyn.studylogger.writer.StudyLogWriter
 import deshel.valentyn.studylogger.StudyPathFilter
 
 class StudyFileEditorListener: FileEditorManagerListener {

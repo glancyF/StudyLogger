@@ -1,14 +1,14 @@
-package deshel.valentyn.studylogger
+package deshel.valentyn.studylogger.writer
 
-import com.intellij.openapi.vfs.VirtualFile
-import java.time.format.DateTimeFormatter
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
