@@ -3,6 +3,7 @@ package deshel.valentyn.studylogger
 import com.intellij.openapi.vfs.VirtualFile
 import java.time.format.DateTimeFormatter
 import com.intellij.openapi.project.Project
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -55,12 +56,39 @@ object StudyLogWriter {
             val relativePath = makeRelativePath(projectBasePath, file.path)
             val size = file.length
             val sha256 = calculateSha256(file)
-            val line = "$timestamp | $eventType | $relativePath | size=$size | sha256=$sha256${System.lineSeparator()}"
-
-            Files.writeString(logFile, line, StandardOpenOption.CREATE, StandardOpenOption.APPEND
-            );
+            val previousEventHash = getPreviousEventHash(logFile)
+            val eventData = "$timestamp | $eventType | $relativePath | size=$size | sha256=$sha256 | prev_hash=$previousEventHash"
+            val eventHash = calculateTextSha256(eventData)
+            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
+            Files.writeString(logFile, line, StandardOpenOption.CREATE, StandardOpenOption.APPEND)
         } catch (_: Exception) {
             //TODO logging here
+        }
+    }
+    private fun getPreviousEventHash(logFile: Path): String {
+        return try {
+            if (!Files.exists(logFile)) {
+                return "GENESIS"
+            }
+            val lines = Files.readAllLines(logFile)
+
+            if (lines.isEmpty()) {
+                return "GENESIS"
+            }
+            val lastLine = lines.lastOrNull { it.contains("event_hash=") } ?: return "GENESIS"
+            val marker = "event_hash="
+            lastLine.substringAfter(marker).trim()
+        } catch (_: Exception) {
+            "UNAVAILABLE"
+        }
+    }
+    private fun calculateTextSha256(text: String): String {
+        return try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
+            hashBytes.joinToString("") { "%02x".format(it) }
+        } catch (_: Exception) {
+            "UNAVAILABLE"
         }
     }
 }
