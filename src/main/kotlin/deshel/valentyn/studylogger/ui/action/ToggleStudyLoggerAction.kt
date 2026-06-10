@@ -1,11 +1,11 @@
-package deshel.valentyn.studylogger.action
+package deshel.valentyn.studylogger.ui.action
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
-import deshel.valentyn.studylogger.state.StudyLoggerState
-import deshel.valentyn.studylogger.writer.StudyLogWriter
+import deshel.valentyn.studylogger.logic.state.StudyLoggerState
+import deshel.valentyn.studylogger.logic.writer.StudyLogWriter
 
 class ToggleStudyLoggerAction : AnAction() {
 

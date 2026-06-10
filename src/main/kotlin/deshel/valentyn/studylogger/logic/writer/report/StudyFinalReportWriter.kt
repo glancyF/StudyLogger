@@ -1,8 +1,9 @@
 package deshel.valentyn.studylogger.writer
 
 import com.intellij.openapi.project.Project
-import deshel.valentyn.studylogger.StudyLogVerifier
-import deshel.valentyn.studylogger.StudyProjectTreeHasher
+import deshel.valentyn.studylogger.logic.StudyLogVerifier
+import deshel.valentyn.studylogger.logic.StudyProjectTreeHasher
+import deshel.valentyn.studylogger.logic.writer.StudySessionInfoWriter
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption

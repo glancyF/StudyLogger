@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger
+package deshel.valentyn.studylogger.logic
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile

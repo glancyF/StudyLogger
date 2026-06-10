@@ -1,6 +1,6 @@
-package deshel.valentyn.studylogger
+package deshel.valentyn.studylogger.logic
 
-import deshel.valentyn.studylogger.writer.StudyLogWriter
+import deshel.valentyn.studylogger.logic.writer.StudyLogWriter
 import java.nio.file.Files
 import java.nio.file.Path
 import java.security.MessageDigest

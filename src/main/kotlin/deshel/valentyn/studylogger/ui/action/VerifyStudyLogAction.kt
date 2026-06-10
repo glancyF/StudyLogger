@@ -1,18 +1,19 @@
-package deshel.valentyn.studylogger.action
+package deshel.valentyn.studylogger.ui.action
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
-import deshel.valentyn.studylogger.writer.StudyFinalReportWriter
+import deshel.valentyn.studylogger.logic.writer.report.StudyEvidenceReportWriter
 
-class GenerateFinalReportAction : AnAction() {
+class VerifyStudyLogAction: AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
         val project: Project = event.project ?: return
-        StudyFinalReportWriter.writeFinalReport(project)
+
+        StudyEvidenceReportWriter.writeVerificationReport(project)
         Messages.showInfoMessage(
             project,
-            "Final report created in .study-log/session-final.json",
+            "Verification report created in .study-log/verification-report.txt",
             "Study Integrity Logger"
         )
     }

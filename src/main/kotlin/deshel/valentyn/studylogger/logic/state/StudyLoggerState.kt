@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger.state
+package deshel.valentyn.studylogger.logic.state
 
 object StudyLoggerState {
     private var enabled: Boolean = true

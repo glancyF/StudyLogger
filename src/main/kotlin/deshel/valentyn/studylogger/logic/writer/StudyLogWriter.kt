@@ -1,9 +1,8 @@
-package deshel.valentyn.studylogger.writer
+package deshel.valentyn.studylogger.logic.writer
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.state.StudyLoggerState
-import org.jetbrains.jsonProtocol.EventType
+import deshel.valentyn.studylogger.logic.state.StudyLoggerState
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path

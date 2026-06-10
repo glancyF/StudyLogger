@@ -1,7 +1,7 @@
-package deshel.valentyn.studylogger.writer.report
+package deshel.valentyn.studylogger.logic.writer.report
 
 import com.intellij.openapi.project.Project
-import deshel.valentyn.studylogger.StudyLogVerifier
+import deshel.valentyn.studylogger.logic.StudyLogVerifier
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption

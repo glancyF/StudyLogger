@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger.writer
+package deshel.valentyn.studylogger.logic.writer
 
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.project.Project

@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger.listener
+package deshel.valentyn.studylogger.logic.listener
 
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.fileEditor.FileDocumentManager
@@ -6,9 +6,8 @@ import com.intellij.openapi.fileEditor.FileDocumentManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.writer.report.StudyEvidenceReportWriter
-import deshel.valentyn.studylogger.writer.StudyLogWriter
-import deshel.valentyn.studylogger.StudyPathFilter
+import deshel.valentyn.studylogger.logic.writer.StudyLogWriter
+import deshel.valentyn.studylogger.logic.StudyPathFilter
 
 class StudyFileSaveListener: FileDocumentManagerListener {
     override fun beforeDocumentSaving(document: Document) {

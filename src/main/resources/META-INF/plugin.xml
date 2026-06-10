@@ -12,16 +12,16 @@
 
     <projectListeners>
         <listener
-                class="deshel.valentyn.studylogger.listener.StudyFileEditorListener"
+                class="deshel.valentyn.studylogger.logic.listener.StudyFileEditorListener"
                 topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
         <listener
-                class="deshel.valentyn.studylogger.listener.StudyProjectActivityListener"
+                class="deshel.valentyn.studylogger.logic.listener.StudyProjectActivityListener"
                 topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </projectListeners>
 
     <applicationListeners>
         <listener
-                class="deshel.valentyn.studylogger.listener.StudyFileSaveListener"
+                class="deshel.valentyn.studylogger.logic.listener.StudyFileSaveListener"
                 topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
     </applicationListeners>
     <actions>
@@ -31,15 +31,15 @@
             <add-to-group group-id="ToolsMenu" anchor="last"/>
 
             <action id="StudyIntegrityLogger.VerifyLog"
-                    class="deshel.valentyn.studylogger.action.VerifyStudyLogAction"
+                    class="deshel.valentyn.studylogger.ui.action.VerifyStudyLogAction"
                     text="Verify Log"
                     description="Verify study integrity logger hash chain"/>
             <action id="StudyIntegrityLogger.GenerateFinalReport"
-                    class="deshel.valentyn.studylogger.action.GenerateFinalReportAction"
+                    class="deshel.valentyn.studylogger.ui.action.GenerateFinalReportAction"
                     text="Generate Final Report"
                     description="Generate final study integrity evidence report"/>
             <action id="StudyIntegrityLogger.Toggle"
-                    class="deshel.valentyn.studylogger.action.ToggleStudyLoggerAction"
+                    class="deshel.valentyn.studylogger.ui.action.ToggleStudyLoggerAction"
                     text="Turn Study Logger OFF"
                     description="Enable or disable Study Integrity Logger"/>
         </group>
