@@ -52,6 +52,10 @@ object StudyPathFilter {
         if (!filePath.startsWith(projectBasePath)) {
             return false
         }
+        val relativePath = filePath.removePrefix(projectBasePath).removePrefix("/")
+        if (relativePath == ".study-log" || relativePath.startsWith(".study-log/")) {
+            return false
+        }
         for (ignoredPart in ignoredPathParts) {
             if (filePath.contains(ignoredPart)) {
                 return false

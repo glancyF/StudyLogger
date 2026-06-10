@@ -10,7 +10,7 @@ import deshel.valentyn.studylogger.StudyPathFilter
 class StudyFileEditorListener: FileEditorManagerListener {
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
         val project = source.project
-        if (StudyPathFilter.shouldLog(project, file)) {
+        if (!StudyPathFilter.shouldLog(project, file)) {
             return
         }
         StudyLogWriter.logFileEvent(project, "FILE_OPENED", file)
