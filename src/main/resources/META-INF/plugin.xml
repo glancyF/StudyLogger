@@ -21,4 +21,16 @@
                 class="deshel.valentyn.studylogger.listener.StudyFileSaveListener"
                 topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
     </applicationListeners>
+    <actions>
+        <group id="StudyIntegrityLogger.Group"
+               text="Study Integrity Logger"
+               popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+            <action id="StudyIntegrityLogger.VerifyLog"
+                    class="deshel.valentyn.studylogger.action.VerifyStudyLogAction"
+                    text="Verify Log"
+                    description="Verify study integrity logger hash chain"/>
+        </group>
+    </actions>
 </idea-plugin>
