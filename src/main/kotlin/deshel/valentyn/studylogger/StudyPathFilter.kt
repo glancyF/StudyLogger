@@ -3,7 +3,7 @@ package deshel.valentyn.studylogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
-class StudyPathFilter {
+object StudyPathFilter {
     private val ignoredExtensions = arrayListOf(
         ".class",
         ".jar",
@@ -50,6 +50,10 @@ class StudyPathFilter {
         val filePath = file.path.replace("\\", "/")
 
         if (!filePath.startsWith(projectBasePath)) {
+            return false
+        }
+        val relativePath = filePath.removePrefix(projectBasePath).removePrefix("/")
+        if (relativePath == ".study-log" || relativePath.startsWith(".study-log/")) {
             return false
         }
         for (ignoredPart in ignoredPathParts) {

@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaUltimate("2025.3.2")
+        intellijIdeaUltimate("2024.3.1")
     }
 }
 
