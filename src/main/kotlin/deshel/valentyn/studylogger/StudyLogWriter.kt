@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 import java.time.OffsetDateTime
 
-object StudyWriter {
+object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private const val maxHashSizeBytes: Long = 10L * 1024L * 1024L
 

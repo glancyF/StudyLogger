@@ -3,7 +3,7 @@ package deshel.valentyn.studylogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
-class StudyPathFilter {
+object StudyPathFilter {
     private val ignoredExtensions = arrayListOf(
         ".class",
         ".jar",
