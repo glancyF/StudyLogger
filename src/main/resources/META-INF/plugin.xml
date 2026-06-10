@@ -44,4 +44,7 @@
                     description="Enable or disable Study Integrity Logger"/>
         </group>
     </actions>
+    <extensions defaultExtensionNs="com.intellij">
+        <statusBarWidgetFactory implementation="deshel.valentyn.studylogger.ui.widget.StudyLoggerStatusBarWidgetFactory"/>
+    </extensions>
 </idea-plugin>
