@@ -12,13 +12,13 @@
 
     <projectListeners>
         <listener
-                class="valentyn.deshel.studylogger.StudyFileEditorListener"
+                class="deshel.valentyn.studylogger.listener.StudyFileEditorListener"
                 topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
 
     <applicationListeners>
         <listener
-                class="valentyn.deshel.studylogger.StudyFileSaveListener"
+                class="deshel.valentyn.studylogger.listener.StudyFileSaveListener"
                 topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
     </applicationListeners>
 </idea-plugin>

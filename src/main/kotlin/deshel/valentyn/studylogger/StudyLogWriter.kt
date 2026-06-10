@@ -3,7 +3,6 @@ package deshel.valentyn.studylogger
 import com.intellij.openapi.vfs.VirtualFile
 import java.time.format.DateTimeFormatter
 import com.intellij.openapi.project.Project
-import kotlinx.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -60,7 +59,7 @@ object StudyLogWriter {
 
             Files.writeString(logFile, line, StandardOpenOption.CREATE, StandardOpenOption.APPEND
             );
-        } catch (e: IOException) {
+        } catch (_: Exception) {
             //TODO logging here
         }
     }
