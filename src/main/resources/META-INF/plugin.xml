@@ -38,6 +38,10 @@
                     class="deshel.valentyn.studylogger.action.GenerateFinalReportAction"
                     text="Generate Final Report"
                     description="Generate final study integrity evidence report"/>
+            <action id="StudyIntegrityLogger.Toggle"
+                    class="deshel.valentyn.studylogger.action.ToggleStudyLoggerAction"
+                    text="Turn Study Logger OFF"
+                    description="Enable or disable Study Integrity Logger"/>
         </group>
     </actions>
 </idea-plugin>
