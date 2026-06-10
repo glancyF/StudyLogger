@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger
+package deshel.valentyn.studylogger.logic
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files

@@ -1,7 +1,8 @@
-package deshel.valentyn.studylogger.writer
+package deshel.valentyn.studylogger.logic.writer
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import deshel.valentyn.studylogger.logic.state.StudyLoggerState
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -13,8 +14,17 @@ import java.time.format.DateTimeFormatter
 object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private const val maxHashSizeBytes: Long = 10L * 1024L * 1024L
-
-    private fun calculateSha256(file: VirtualFile): String {
+    //TODO CAN BE REFACTOR
+     fun calculateTextSha256(text: String): String {
+        return try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
+            hashBytes.joinToString("") { "%02x".format(it) }
+        } catch (_: Exception) {
+            "UNAVAILABLE"
+        }
+    }
+     fun calculateSha256(file: VirtualFile): String {
         return try {
             if (file.length > maxHashSizeBytes) {
                 return "SKIPPED_TOO_LARGE" //TODO refactor into ENUM
@@ -45,6 +55,9 @@ object StudyLogWriter {
         }
     }
      fun logFileEvent(project: Project, eventType: String, file: VirtualFile) {
+         if (!StudyLoggerState.isEnabled()) {
+             return
+         }
         try {
             val projectBasePath = project.basePath ?: return
             val projectRoot = Path.of(projectBasePath)
@@ -82,13 +95,64 @@ object StudyLogWriter {
             "UNAVAILABLE"
         }
     }
-    private fun calculateTextSha256(text: String): String {
-        return try {
-            val digest = MessageDigest.getInstance("SHA-256")
-            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
-            hashBytes.joinToString("") { "%02x".format(it) }
+
+    fun logProjectEvent(project: Project, eventType: String) {
+        if (!StudyLoggerState.isEnabled()) {
+            return
+        }
+        try {
+            val projectBasePath = project.basePath ?: return
+
+            val projectRoot = Path.of(projectBasePath)
+            val logDirectory = projectRoot.resolve(".study-log")
+            val logFile = logDirectory.resolve("file-events.log")
+
+            Files.createDirectories(logDirectory)
+
+            val timestamp = OffsetDateTime.now().format(formatter)
+            val projectName = project.name
+            val previousEventHash = getPreviousEventHash(logFile)
+            val eventData = "$timestamp | $eventType | project=$projectName | prev_hash=$previousEventHash"
+            val eventHash = calculateTextSha256(eventData)
+            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
+
+            Files.writeString(
+                logFile,
+                line,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            )
         } catch (_: Exception) {
-            "UNAVAILABLE"
+            // log
+        }
+    }
+    fun logPluginStateEvent(project: Project, eventType: String) {
+        try {
+            val projectBasePath = project.basePath ?: return
+
+            val projectRoot = Path.of(projectBasePath)
+            val logDirectory = projectRoot.resolve(".study-log")
+            val logFile = logDirectory.resolve("file-events.log")
+
+            Files.createDirectories(logDirectory)
+
+            val timestamp = OffsetDateTime.now().format(formatter)
+
+            val previousEventHash = getPreviousEventHash(logFile)
+
+            val eventData = "$timestamp | $eventType | logger_enabled=${eventType == "PLUGIN_ENABLED"} | prev_hash=$previousEventHash"
+            val eventHash = calculateTextSha256(eventData)
+
+            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
+
+            Files.writeString(
+                logFile,
+                line,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            )
+        } catch (_: Exception) {
+            // log
         }
     }
 }

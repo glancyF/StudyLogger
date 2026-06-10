@@ -1,11 +1,11 @@
-package deshel.valentyn.studylogger.listener
+package deshel.valentyn.studylogger.logic.listener
 
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.writer.StudyLogWriter
-import deshel.valentyn.studylogger.StudyPathFilter
+import deshel.valentyn.studylogger.logic.writer.StudyLogWriter
+import deshel.valentyn.studylogger.logic.StudyPathFilter
 
 class StudyFileEditorListener: FileEditorManagerListener {
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
