@@ -34,6 +34,10 @@
                     class="deshel.valentyn.studylogger.action.VerifyStudyLogAction"
                     text="Verify Log"
                     description="Verify study integrity logger hash chain"/>
+            <action id="StudyIntegrityLogger.GenerateFinalReport"
+                    class="deshel.valentyn.studylogger.action.GenerateFinalReportAction"
+                    text="Generate Final Report"
+                    description="Generate final study integrity evidence report"/>
         </group>
     </actions>
 </idea-plugin>

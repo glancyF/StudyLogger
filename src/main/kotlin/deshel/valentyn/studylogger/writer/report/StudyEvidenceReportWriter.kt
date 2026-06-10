@@ -1,4 +1,4 @@
-package deshel.valentyn.studylogger.writer
+package deshel.valentyn.studylogger.writer.report
 
 import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.StudyLogVerifier

@@ -14,8 +14,17 @@ import java.time.format.DateTimeFormatter
 object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private const val maxHashSizeBytes: Long = 10L * 1024L * 1024L
-
-    private fun calculateSha256(file: VirtualFile): String {
+    //TODO CAN BE REFACTOR
+     fun calculateTextSha256(text: String): String {
+        return try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
+            hashBytes.joinToString("") { "%02x".format(it) }
+        } catch (_: Exception) {
+            "UNAVAILABLE"
+        }
+    }
+     fun calculateSha256(file: VirtualFile): String {
         return try {
             if (file.length > maxHashSizeBytes) {
                 return "SKIPPED_TOO_LARGE" //TODO refactor into ENUM
@@ -79,15 +88,6 @@ object StudyLogWriter {
             val lastLine = lines.lastOrNull { it.contains("event_hash=") } ?: return "GENESIS"
             val marker = "event_hash="
             lastLine.substringAfter(marker).trim()
-        } catch (_: Exception) {
-            "UNAVAILABLE"
-        }
-    }
-    private fun calculateTextSha256(text: String): String {
-        return try {
-            val digest = MessageDigest.getInstance("SHA-256")
-            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
-            hashBytes.joinToString("") { "%02x".format(it) }
         } catch (_: Exception) {
             "UNAVAILABLE"
         }

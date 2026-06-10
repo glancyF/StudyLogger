@@ -4,7 +4,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
 object StudyPathFilter {
-    private val ignoredExtensions = arrayListOf(
+    //TODO can be refactor in somewhere else
+     val ignoredExtensions = arrayListOf(
         ".class",
         ".jar",
         ".zip",
@@ -17,7 +18,7 @@ object StudyPathFilter {
         ".so",
         ".a"
     )
-    private val ignoredPathParts = arrayListOf(
+     val ignoredPathParts = arrayListOf(
         "/.git/",
         "/.idea/",
         "/.gradle/",
@@ -30,7 +31,7 @@ object StudyPathFilter {
         "/cmake-build-release/",
         "/CMakeFiles/"
     )
-    private val ignoredFileNames = listOf(
+     val ignoredFileNames = listOf(
         "CMakeCache.txt",
         "compile_commands.json"
     )

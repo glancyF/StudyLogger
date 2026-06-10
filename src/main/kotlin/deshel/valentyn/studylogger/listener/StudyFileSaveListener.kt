@@ -6,7 +6,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
-import deshel.valentyn.studylogger.writer.StudyEvidenceReportWriter
+import deshel.valentyn.studylogger.writer.report.StudyEvidenceReportWriter
 import deshel.valentyn.studylogger.writer.StudyLogWriter
 import deshel.valentyn.studylogger.StudyPathFilter
 

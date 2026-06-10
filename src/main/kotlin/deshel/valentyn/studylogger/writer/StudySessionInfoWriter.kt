@@ -50,8 +50,8 @@ object StudySessionInfoWriter {
             // log
         }
     }
-
-    private fun escapeJson(value: String?): String {
+    //TODO refactor
+     fun escapeJson(value: String?): String {
         if (value == null) return ""
         return value
             .replace("\\", "\\\\")
