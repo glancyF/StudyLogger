@@ -41,7 +41,15 @@
             <action id="StudyIntegrityLogger.Toggle"
                     class="deshel.valentyn.studylogger.ui.action.ToggleStudyLoggerAction"
                     text="Turn Study Logger OFF"
-                    description="Enable or disable Study Integrity Logger"/>
+                    description="Enable or disable study integrity logger"/>
+            <action id="StudyIntegrityLogger.GenerateSubmissionEvidence"
+                    class="deshel.valentyn.studylogger.ui.action.GenerateSubmissionEvidenceAction"
+                    text="Generate Submission Evidence"
+                    description="Generate SHA-256 evidence for a selected submission file"/>
+            <action id="StudyIntegrityLogger.ExportEvidencePackage"
+                    class="deshel.valentyn.studylogger.ui.action.ExportEvidencePackageAction"
+                    text="Export Evidence Package"
+                    description="Export study integrity evidence files as a ZIP archive"/>
         </group>
     </actions>
     <extensions defaultExtensionNs="com.intellij">

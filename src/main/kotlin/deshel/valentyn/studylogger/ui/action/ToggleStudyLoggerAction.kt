@@ -12,7 +12,7 @@ class ToggleStudyLoggerAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
         val project: Project = event.project ?: return
 
-        val enabled = StudyLoggerState.toggle()
+        val enabled = StudyLoggerState.getInstance().toggle()
 
         if (enabled) {
             StudyLogWriter.logPluginStateEvent(project, "PLUGIN_ENABLED")
@@ -29,7 +29,7 @@ class ToggleStudyLoggerAction : AnAction() {
 
     override fun update(event: AnActionEvent) {
         event.presentation.isEnabledAndVisible = event.project != null
-        event.presentation.text = if (StudyLoggerState.isEnabled()) {
+        event.presentation.text = if (StudyLoggerState.getInstance().isEnabled()) {
             "Turn Study Logger OFF"
         } else {
             "Turn Study Logger ON"
