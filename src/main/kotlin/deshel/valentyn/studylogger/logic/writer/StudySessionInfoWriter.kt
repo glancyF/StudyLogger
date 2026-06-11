@@ -3,6 +3,7 @@ package deshel.valentyn.studylogger.logic.writer
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
+import deshel.valentyn.studylogger.logic.helper.StudyJsonUtils
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -23,17 +24,17 @@ object StudySessionInfoWriter {
             val json = """
                 {
                   "session_started_at": "$startedAt",
-                  "project_name": "${escapeJson(project.name)}",
-                  "project_path": "${escapeJson(projectBasePath)}",
-                  "ide_name": "${escapeJson(appInfo.fullApplicationName)}",
-                  "ide_build": "${escapeJson(appInfo.build.asString())}",
+                  "project_name": "${StudyJsonUtils.escapeJson(project.name)}",
+                  "project_path": "${StudyJsonUtils.escapeJson(projectBasePath)}",
+                  "ide_name": "${StudyJsonUtils.escapeJson(appInfo.fullApplicationName)}",
+                  "ide_build": "${StudyJsonUtils.escapeJson(appInfo.build.asString())}",
                   "plugin_id": "deshel.valentyn.studylogger",
                   "plugin_version": "1.0.0",
-                  "os_name": "${escapeJson(System.getProperty("os.name"))}",
-                  "os_version": "${escapeJson(System.getProperty("os.version"))}",
-                  "os_arch": "${escapeJson(System.getProperty("os.arch"))}",
-                  "java_version": "${escapeJson(System.getProperty("java.version"))}",
-                  "timezone": "${escapeJson(ZoneId.systemDefault().id)}"
+                  "os_name": "${StudyJsonUtils.escapeJson(System.getProperty("os.name"))}",
+                  "os_version": "${StudyJsonUtils.escapeJson(System.getProperty("os.version"))}",
+                  "os_arch": "${StudyJsonUtils.escapeJson(System.getProperty("os.arch"))}",
+                  "java_version": "${StudyJsonUtils.escapeJson(System.getProperty("java.version"))}",
+                  "timezone": "${StudyJsonUtils.escapeJson(ZoneId.systemDefault().id)}"
                 }
             """.trimIndent()
 
@@ -46,14 +47,5 @@ object StudySessionInfoWriter {
         } catch (_: Exception) {
             // log
         }
-    }
-    //TODO refactor
-     fun escapeJson(value: String?): String {
-        if (value == null) return ""
-        return value
-            .replace("\\", "\\\\")
-            .replace("\"", "\\\"")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
     }
 }

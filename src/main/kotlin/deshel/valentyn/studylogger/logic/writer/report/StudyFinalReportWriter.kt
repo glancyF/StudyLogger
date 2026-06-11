@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.logic.StudyLogVerifier
 import deshel.valentyn.studylogger.logic.StudyProjectTreeHasher
 import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
+import deshel.valentyn.studylogger.logic.helper.StudyJsonUtils
 import deshel.valentyn.studylogger.logic.writer.StudySessionInfoWriter
 import java.nio.file.Files
 import java.nio.file.Path
@@ -29,14 +30,14 @@ object StudyFinalReportWriter {
             val json = """
                 {
                   "generated_at": "${OffsetDateTime.now().format(formatter)}",
-                  "project_name": "${StudySessionInfoWriter.escapeJson(project.name)}",
-                  "project_path": "${StudySessionInfoWriter.escapeJson(projectBasePath)}",
+                  "project_name": "${StudyJsonUtils.escapeJson(project.name)}",
+                  "project_path": "${StudyJsonUtils.escapeJson(projectBasePath)}",
                   "verification_result": "${if (verificationResult.isValid) "VALID" else "BROKEN"}",
                   "checked_events": ${verificationResult.checkedEvents},
-                  "final_log_hash": "${StudySessionInfoWriter.escapeJson(verificationResult.finalHash)}",
-                  "verification_message": "${StudySessionInfoWriter.escapeJson(verificationResult.message)}",
-                  "project_tree_hash": "${StudySessionInfoWriter.escapeJson(projectTreeHash)}",
-                  "git_head_commit": "${StudySessionInfoWriter.escapeJson(gitHeadCommit)}"
+                  "final_log_hash": "${StudyJsonUtils.escapeJson(verificationResult.finalHash)}",
+                  "verification_message": "${StudyJsonUtils.escapeJson(verificationResult.message)}",
+                  "project_tree_hash": "${StudyJsonUtils.escapeJson(projectTreeHash)}",
+                  "git_head_commit": "${StudyJsonUtils.escapeJson(gitHeadCommit)}"
                 }
             """.trimIndent()
 
