@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.logic.StudyLogVerifier
 import deshel.valentyn.studylogger.logic.StudyProjectTreeHasher
 import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
+import deshel.valentyn.studylogger.logic.helper.StudyGitUtils
 import deshel.valentyn.studylogger.logic.helper.StudyJsonUtils
 import deshel.valentyn.studylogger.logic.writer.StudySessionInfoWriter
 import java.nio.file.Files
@@ -25,7 +26,7 @@ object StudyFinalReportWriter {
 
             val verificationResult = StudyLogVerifier.verify(logFile)
             val projectTreeHash = StudyProjectTreeHasher.calculateProjectTreeHash(projectRoot)
-            val gitHeadCommit = readGitHeadCommit(projectRoot)
+            val gitHeadCommit = StudyGitUtils.readGitHeadCommit(projectRoot)
 
             val json = """
                 {
@@ -49,33 +50,6 @@ object StudyFinalReportWriter {
             )
         } catch (_: Exception) {
             // Final report generation must never break the IDE.
-        }
-    }
-
-    private fun readGitHeadCommit(projectRoot: Path): String {
-        return try {
-            val headFile = projectRoot.resolve(".git").resolve("HEAD")
-
-            if (!Files.exists(headFile)) {
-                return "NO_GIT_REPOSITORY"
-            }
-
-            val headContent = Files.readString(headFile).trim()
-
-            if (headContent.startsWith("ref:")) {
-                val refPath = headContent.removePrefix("ref:").trim()
-                val refFile = projectRoot.resolve(".git").resolve(refPath)
-
-                if (Files.exists(refFile)) {
-                    Files.readString(refFile).trim()
-                } else {
-                    "GIT_REF_NOT_FOUND"
-                }
-            } else {
-                headContent
-            }
-        } catch (_: Exception) {
-            "UNAVAILABLE"
         }
     }
 }
