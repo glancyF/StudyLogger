@@ -31,17 +31,13 @@ object StudyLogWriter {
          }
         try {
             val projectBasePath = project.basePath ?: return
-            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
 
             val timestamp = OffsetDateTime.now().format(formatter)
             val relativePath = makeRelativePath(projectBasePath, file.path)
             val size = file.length
             val sha256 = StudyHashUtils.calculateSha256(file)
-            val previousEventHash = getPreviousEventHash(logFile)
-            val eventData = "$timestamp | $eventType | $relativePath | size=$size | sha256=$sha256 | prev_hash=$previousEventHash"
-            val eventHash = StudyHashUtils.calculateTextSha256(eventData)
-            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
-            Files.writeString(logFile, line, StandardOpenOption.CREATE, StandardOpenOption.APPEND)
+            val eventDataPrefix = "$timestamp | $eventType | $relativePath | size=$size | sha256=$sha256"
+            appendChainedEvent(project, eventDataPrefix)
         } catch (_: Exception) {
             //TODO logging here
         }
@@ -69,43 +65,36 @@ object StudyLogWriter {
             return
         }
         try {
-            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
-
             val timestamp = OffsetDateTime.now().format(formatter)
             val projectName = project.name
-            val previousEventHash = getPreviousEventHash(logFile)
-            val eventData = "$timestamp | $eventType | project=$projectName | prev_hash=$previousEventHash"
-            val eventHash = StudyHashUtils.calculateTextSha256(eventData)
-            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
 
-            Files.writeString(
-                logFile,
-                line,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-            )
+            val eventDataPrefix = "$timestamp | $eventType | project=$projectName"
+            appendChainedEvent(project, eventDataPrefix)
         } catch (_: Exception) {
             // log
         }
     }
+    private fun appendChainedEvent(project: Project, eventDataPrefix: String) {
+        val logFile = StudyLogPaths.fileEventsLog(project) ?: return
+
+        val previousEventHash = getPreviousEventHash(logFile)
+        val eventData = "$eventDataPrefix | prev_hash=$previousEventHash"
+        val eventHash = StudyHashUtils.calculateTextSha256(eventData)
+        val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
+
+        Files.writeString(
+            logFile,
+            line,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.APPEND
+        )
+    }
     fun logPluginStateEvent(project: Project, eventType: String) {
         try {
-            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
             val timestamp = OffsetDateTime.now().format(formatter)
 
-            val previousEventHash = getPreviousEventHash(logFile)
-
-            val eventData = "$timestamp | $eventType | logger_enabled=${eventType == "PLUGIN_ENABLED"} | prev_hash=$previousEventHash"
-            val eventHash = StudyHashUtils.calculateTextSha256(eventData)
-
-            val line = "$eventData | event_hash=$eventHash${System.lineSeparator()}"
-
-            Files.writeString(
-                logFile,
-                line,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-            )
+            val eventDataPrefix = "$timestamp | $eventType | logger_enabled=${eventType == "PLUGIN_ENABLED"}"
+            appendChainedEvent(project, eventDataPrefix)
         } catch (_: Exception) {
             // log
         }
