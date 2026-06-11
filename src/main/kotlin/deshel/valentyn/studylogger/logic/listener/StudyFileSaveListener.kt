@@ -18,7 +18,6 @@ class StudyFileSaveListener: FileDocumentManagerListener {
             return
         }
         StudyLogWriter.logFileEvent(project, "FILE_SAVED", file)
-//        StudyEvidenceReportWriter.writeVerificationReport(project); //TODO temp
     }
 
     private fun findProjectForFile(file: VirtualFile): Project? {

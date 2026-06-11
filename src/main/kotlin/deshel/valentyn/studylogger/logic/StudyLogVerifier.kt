@@ -1,5 +1,6 @@
 package deshel.valentyn.studylogger.logic
 
+import deshel.valentyn.studylogger.logic.helper.StudyHashUtils
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -65,7 +66,7 @@ object StudyLogVerifier {
                 }
 
                 val eventData = line.substringBefore(" | event_hash=").trim()
-                val recalculatedHash = calculateTextSha256(eventData)
+                val recalculatedHash = StudyHashUtils.calculateTextSha256(eventData)
 
                 if (eventHash != recalculatedHash) {
                     return VerificationResult(
@@ -105,17 +106,6 @@ object StudyLogVerifier {
             .substringBefore(" | ")
             .trim()
             .ifBlank { null }
-    }
-
-    private fun calculateTextSha256(text: String): String {
-        return try {
-            val digest = MessageDigest.getInstance("SHA-256")
-            val hashBytes = digest.digest(text.toByteArray(StandardCharsets.UTF_8))
-
-            hashBytes.joinToString("") { "%02x".format(it) }
-        } catch (_: Exception) {
-            "UNAVAILABLE"
-        }
     }
 }
 
