@@ -2,6 +2,7 @@ package deshel.valentyn.studylogger.logic.writer.report
 
 import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.logic.StudyLogVerifier
+import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -14,14 +15,8 @@ object StudyEvidenceReportWriter {
 
     fun writeVerificationReport(project: Project) {
         try {
-            val projectBasePath = project.basePath ?: return
-
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val logFile = logDirectory.resolve("file-events.log")
-            val reportFile = logDirectory.resolve("verification-report.txt")
-
-            Files.createDirectories(logDirectory)
+            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
+            val reportFile = StudyLogPaths.verificationReport(project) ?: return
 
             val result = StudyLogVerifier.verify(logFile)
 

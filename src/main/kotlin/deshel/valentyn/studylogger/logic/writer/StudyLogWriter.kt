@@ -2,6 +2,7 @@ package deshel.valentyn.studylogger.logic.writer
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
 import deshel.valentyn.studylogger.logic.helper.StudyHashUtils
 import deshel.valentyn.studylogger.logic.state.StudyLoggerState
 import java.nio.file.Files
@@ -30,10 +31,7 @@ object StudyLogWriter {
          }
         try {
             val projectBasePath = project.basePath ?: return
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val logFile = logDirectory.resolve("file-events.log")
-            Files.createDirectories(logFile.parent)
+            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
 
             val timestamp = OffsetDateTime.now().format(formatter)
             val relativePath = makeRelativePath(projectBasePath, file.path)
@@ -71,13 +69,7 @@ object StudyLogWriter {
             return
         }
         try {
-            val projectBasePath = project.basePath ?: return
-
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val logFile = logDirectory.resolve("file-events.log")
-
-            Files.createDirectories(logDirectory)
+            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
 
             val timestamp = OffsetDateTime.now().format(formatter)
             val projectName = project.name
@@ -98,14 +90,7 @@ object StudyLogWriter {
     }
     fun logPluginStateEvent(project: Project, eventType: String) {
         try {
-            val projectBasePath = project.basePath ?: return
-
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val logFile = logDirectory.resolve("file-events.log")
-
-            Files.createDirectories(logDirectory)
-
+            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
             val timestamp = OffsetDateTime.now().format(formatter)
 
             val previousEventHash = getPreviousEventHash(logFile)

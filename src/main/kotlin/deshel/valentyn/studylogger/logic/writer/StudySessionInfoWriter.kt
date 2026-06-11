@@ -2,6 +2,7 @@ package deshel.valentyn.studylogger.logic.writer
 
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.project.Project
+import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -15,11 +16,7 @@ object StudySessionInfoWriter {
     fun writeSessionInfo(project: Project) {
         try {
             val projectBasePath = project.basePath ?: return
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val sessionInfoFile = logDirectory.resolve("session-info.json")
-
-            Files.createDirectories(logDirectory)
+            val sessionInfoFile = StudyLogPaths.sessionInfo(project) ?: return
 
             val appInfo = ApplicationInfo.getInstance()
             val startedAt = OffsetDateTime.now().format(formatter)

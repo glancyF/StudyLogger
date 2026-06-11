@@ -3,6 +3,7 @@ package deshel.valentyn.studylogger.writer
 import com.intellij.openapi.project.Project
 import deshel.valentyn.studylogger.logic.StudyLogVerifier
 import deshel.valentyn.studylogger.logic.StudyProjectTreeHasher
+import deshel.valentyn.studylogger.logic.dto.path.StudyLogPaths
 import deshel.valentyn.studylogger.logic.writer.StudySessionInfoWriter
 import java.nio.file.Files
 import java.nio.file.Path
@@ -17,13 +18,9 @@ object StudyFinalReportWriter {
     fun writeFinalReport(project: Project) {
         try {
             val projectBasePath = project.basePath ?: return
-
-            val projectRoot = Path.of(projectBasePath)
-            val logDirectory = projectRoot.resolve(".study-log")
-            val logFile = logDirectory.resolve("file-events.log")
-            val finalReportFile = logDirectory.resolve("session-final.json")
-
-            Files.createDirectories(logDirectory)
+            val projectRoot = StudyLogPaths.projectRoot(project) ?: return
+            val logFile = StudyLogPaths.fileEventsLog(project) ?: return
+            val finalReportFile = StudyLogPaths.sessionFinal(project) ?: return
 
             val verificationResult = StudyLogVerifier.verify(logFile)
             val projectTreeHash = StudyProjectTreeHasher.calculateProjectTreeHash(projectRoot)
