@@ -48,4 +48,16 @@ object StudyLogPaths {
         val directory = ensureLogDirectory(project) ?: return null
         return directory.resolve("submission-evidence.txt")
     }
+
+     fun makeRelativePath(projectBasePath: String, filePath: String): String {
+        val normalizedBase = projectBasePath.replace("\\", "/")
+        val normalizedFile = filePath.replace("\\", "/")
+        return if (normalizedFile.startsWith(normalizedBase)) {
+            normalizedFile
+                .substring(normalizedBase.length)
+                .replaceFirst("^/".toRegex(), "")
+        } else {
+            normalizedFile
+        }
+    }
 }

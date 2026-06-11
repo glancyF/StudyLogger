@@ -14,17 +14,6 @@ import java.time.format.DateTimeFormatter
 object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-    private fun makeRelativePath(projectBasePath: String, filePath: String): String {
-        val normalizedBase = projectBasePath.replace("\\", "/")
-        val normalizedFile = filePath.replace("\\", "/")
-        return if (normalizedFile.startsWith(normalizedBase)) {
-            normalizedFile
-                .substring(normalizedBase.length)
-                .replaceFirst("^/".toRegex(), "")
-        } else {
-            normalizedFile
-        }
-    }
      fun logFileEvent(project: Project, eventType: String, file: VirtualFile) {
          if (!StudyLoggerState.isEnabled()) {
              return
@@ -33,7 +22,7 @@ object StudyLogWriter {
             val projectBasePath = project.basePath ?: return
 
             val timestamp = OffsetDateTime.now().format(formatter)
-            val relativePath = makeRelativePath(projectBasePath, file.path)
+            val relativePath = StudyLogPaths.makeRelativePath(projectBasePath, file.path)
             val size = file.length
             val sha256 = StudyHashUtils.calculateSha256(file)
             val eventDataPrefix = "$timestamp | $eventType | $relativePath | size=$size | sha256=$sha256"
