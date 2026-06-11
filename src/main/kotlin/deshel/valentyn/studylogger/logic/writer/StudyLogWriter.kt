@@ -13,7 +13,18 @@ import java.time.format.DateTimeFormatter
 
 object StudyLogWriter {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    fun logSubmissionHashCreated(project: Project, submissionFile: Path, submissionSha256: String) {
+        try {
+            val timestamp = OffsetDateTime.now().format(formatter)
 
+            val eventDataPrefix =
+                "$timestamp | SUBMISSION_HASH_CREATED | file=${submissionFile.toAbsolutePath()} | sha256=$submissionSha256"
+
+            appendChainedEvent(project, eventDataPrefix)
+        } catch (_: Exception) {
+            // TODO logging here
+        }
+    }
      fun logFileEvent(project: Project, eventType: String, file: VirtualFile) {
          if (!StudyLoggerState.isEnabled()) {
              return
