@@ -26,7 +26,7 @@ object StudyLogWriter {
         }
     }
      fun logFileEvent(project: Project, eventType: String, file: VirtualFile) {
-         if (!StudyLoggerState.isEnabled()) {
+         if (!StudyLoggerState.getInstance().isEnabled()) {
              return
          }
         try {
@@ -61,7 +61,7 @@ object StudyLogWriter {
     }
 
     fun logProjectEvent(project: Project, eventType: String) {
-        if (!StudyLoggerState.isEnabled()) {
+        if (!StudyLoggerState.getInstance().isEnabled()) {
             return
         }
         try {

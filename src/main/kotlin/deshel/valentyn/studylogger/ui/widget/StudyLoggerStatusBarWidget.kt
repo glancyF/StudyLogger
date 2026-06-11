@@ -18,7 +18,7 @@ class StudyLoggerStatusBarWidget(project: Project) : EditorBasedStatusBarPopup(p
     }
 
     override fun getWidgetState(file: com.intellij.openapi.vfs.VirtualFile?): WidgetState {
-        val text = if (StudyLoggerState.isEnabled()) {
+        val text = if (StudyLoggerState.getInstance().isEnabled()) {
             "Study Logger: ON"
         } else {
             "Study Logger: OFF"
@@ -35,10 +35,10 @@ class StudyLoggerStatusBarWidget(project: Project) : EditorBasedStatusBarPopup(p
         val group = DefaultActionGroup()
 
         group.add(object : AnAction(
-            if (StudyLoggerState.isEnabled()) "Turn Study Logger OFF" else "Turn Study Logger ON"
+            if (StudyLoggerState.getInstance().isEnabled()) "Turn Study Logger OFF" else "Turn Study Logger ON"
         ) {
             override fun actionPerformed(event: AnActionEvent) {
-                val enabled = StudyLoggerState.toggle()
+                val enabled = StudyLoggerState.getInstance().toggle()
 
                 if (enabled) {
                     StudyLogWriter.logPluginStateEvent(project, "PLUGIN_ENABLED")
